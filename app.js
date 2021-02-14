@@ -60,7 +60,6 @@ const selectItem = (event, img) => {
 }
 var timer
 const createSlider = () => {
-  toggleSpinner();
   // check slider image length
   if (sliders.length < 2) {
     alert('Select at least 2 image.')
@@ -104,9 +103,8 @@ const createSlider = () => {
     slideIndex++;
     changeSlide(slideIndex);
   }, newDuration);
-  toggleSpinner();
+  
 }
-
 // change slider index 
 const changeItem = index => {
   changeSlide(slideIndex += index);
@@ -148,6 +146,4 @@ sliderBtn.addEventListener('click', function () {
 const toggleSpinner = () => {
   const spinner = document.getElementById('spinner');
   spinner.classList.toggle('d-none');
-  const sliderSpin = document.getElementById('sliders');
-  sliderSpin.classList.toggle('d-none');
 }
