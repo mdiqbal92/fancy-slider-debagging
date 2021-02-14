@@ -13,8 +13,10 @@ let sliders = [];
 // to create your own api key
 const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 
+
 // show images 
 const showImages = (images) => {
+  toggleSpinner();
   imagesArea.style.display = 'block';
   gallery.innerHTML = '';
   // show gallery title
@@ -36,26 +38,29 @@ document.getElementById("search")
 });
 
 const getImages = (query) => {
+  
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
     .catch(err => console.log(err))
+    toggleSpinner();
 }
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
-  element.classList.add('added');
- 
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
+    element.classList.toggle('added');
   } else {
-    alert('Hey, Already added !')
+    sliders.splice(indexOf(img), 1);
+    element.classList.toggle('added');
   }
 }
 var timer
 const createSlider = () => {
+  toggleSpinner();
   // check slider image length
   if (sliders.length < 2) {
     alert('Select at least 2 image.')
@@ -71,14 +76,21 @@ const createSlider = () => {
   `;
 
   sliderContainer.appendChild(prevNext)
+  
   document.querySelector('.main').style.display = 'block';
+  
   // hide image aria
   imagesArea.style.display = 'none';
+
   let duration = document.getElementById('duration').value;
-  let newDuration = 1000;
-  if(duration = null || duration < 0){
+  let newDuration = 1000; 
+  if(duration <= 0 || duration == null){
+    newDuration = 1000;
+  }
+  else{
     newDuration = duration * 1000;
   }
+
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -92,6 +104,7 @@ const createSlider = () => {
     slideIndex++;
     changeSlide(slideIndex);
   }, newDuration);
+  toggleSpinner();
 }
 
 // change slider index 
@@ -131,3 +144,10 @@ searchBtn.addEventListener('click', function () {
 sliderBtn.addEventListener('click', function () {
   createSlider()
 })
+
+const toggleSpinner = () => {
+  const spinner = document.getElementById('spinner');
+  spinner.classList.toggle('d-none');
+  const sliderSpin = document.getElementById('sliders');
+  sliderSpin.classList.toggle('d-none');
+}

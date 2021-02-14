@@ -13,6 +13,9 @@
 .slider-item {
   display: none;
 }
+.spinner{
+  display: none;
+}
 
 .img-thumbnail {
   cursor: pointer;
