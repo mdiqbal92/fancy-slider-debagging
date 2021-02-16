@@ -1,1 +1,1 @@
-# fancy-slider-debagging
+# fancy-slider-debugging
